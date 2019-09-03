@@ -18,12 +18,21 @@
 #
 def triangle(a, b, c):
     # DELETE 'PASS' AND WRITE THIS CODE
+    ensure_valid_dimensions(a, b, c)
     if a == b and b == c:
         return 'equilateral'
     elif a == b or b == c or a == c:
         return 'isosceles'
     elif a != b and b != c and a != c:
         return 'scalene'
+
+
+def ensure_valid_dimensions(a, b, c):
+    c_doesnt_exist_in_human_dimension = a <= 0 or b <= 0 or c <= 0
+    c_sides_do_not_add_up_correctly = a + b < c or a + c < b
+    if c_doesnt_exist_in_human_dimension or c_sides_do_not_add_up_correctly:
+        raise TriangleError()
+
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError(Exception):
