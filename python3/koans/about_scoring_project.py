@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from functools import reduce
 
 from runner.koan import *
 
@@ -32,9 +33,29 @@ from runner.koan import *
 #
 # Your goal is to write the score method.
 
+
+# count amount of each number, multiply by the score multiplier
 def score(dice):
     # You need to write this method
-    pass
+    if len(dice) == 0:
+        return 0
+
+    score = 0
+    dictionary = {}.fromkeys(range(1, 7), 0)
+
+    for die in dice:
+        dictionary[die] += 1
+    amount_of_ones = dictionary[1]
+    score += (amount_of_ones // 3) * 1000
+    for die in range(2, 7):
+        amount_of_die_face = dictionary[die]
+        of_ones_ = (amount_of_die_face // 3)
+        score += of_ones_ * 100 * die
+
+    score += (dictionary[1] % 3) * 100
+    score += (dictionary[5] % 3) * 50
+
+    return score
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
